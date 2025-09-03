@@ -1,0 +1,47 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Custom styles */
+body {
+  @apply bg-gray-50 text-gray-900;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.container {
+  @apply max-w-4xl mx-auto px-4 py-8;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* Material overrides */
+.mat-mdc-snack-bar-container {
+  &.success-snackbar {
+    --mdc-snackbar-container-color: #10b981;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+
+  &.error-snackbar {
+    --mdc-snackbar-container-color: #ef4444;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+}

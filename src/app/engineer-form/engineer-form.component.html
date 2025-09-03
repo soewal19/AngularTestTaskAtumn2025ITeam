@@ -1,0 +1,153 @@
+<form (ngSubmit)="onSubmit()" class="engineer-form">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Frontend Engineer Form</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>First Name</mat-label>
+          <input matInput 
+                 [value]="formState().firstName"
+                 (input)="updateField('firstName', $any($event.target).value)"
+                 required>
+          <mat-error *ngIf="hasError('firstName')">
+            {{ getErrorMessage('firstName') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Last Name</mat-label>
+          <input matInput 
+                 [value]="formState().lastName"
+                 (input)="updateField('lastName', $any($event.target).value)"
+                 required>
+          <mat-error *ngIf="hasError('lastName')">
+            {{ getErrorMessage('lastName') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput 
+                 data-cy="dateOfBirth"
+                 [matDatepicker]="picker" 
+                 [value]="formState().dateOfBirth"
+                 (dateChange)="onDateChange($event)">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="hasError('dateOfBirth')">
+            {{ getErrorMessage('dateOfBirth') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Framework</mat-label>
+          <mat-select 
+            data-cy="framework"
+            [value]="formState().framework"
+            (selectionChange)="onFrameworkChange($event.value)">
+            <mat-option *ngFor="let framework of ['angular', 'react', 'vue']" [value]="framework">
+              {{ framework | titlecase }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="hasError('framework')">
+            {{ getErrorMessage('framework') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Version</mat-label>
+          <mat-select 
+            data-cy="version"
+            [value]="formState().version"
+            (selectionChange)="onVersionChange($event.value)"
+            [disabled]="!formState().framework">
+            <mat-option *ngFor="let version of availableVersions()" [value]="version">
+              {{ version }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="hasError('version')">
+            {{ getErrorMessage('version') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email</mat-label>
+          <input matInput 
+                 type="email"
+                 [value]="formState().email"
+                 (input)="updateField('email', $any($event.target).value)"
+                 required>
+          <mat-error *ngIf="hasError('email')">
+            {{ getErrorMessage('email') }}
+          </mat-error>
+          <mat-error *ngIf="emailError()">
+            {{ emailError() }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="hobbies-section">
+        <h3>Hobbies</h3>
+        <div class="hobby-inputs">
+          <mat-form-field appearance="outline" class="hobby-field">
+            <mat-label>Hobby</mat-label>
+            <input matInput 
+                   data-cy="hobby"
+                   [formControl]="newHobby"
+                   placeholder="Enter hobby">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="duration-field">
+            <mat-label>Duration (months)</mat-label>
+            <input matInput 
+                   type="number"
+                   [formControl]="newHobbyDuration"
+                   placeholder="Enter duration">
+            <mat-error *ngIf="newHobbyDuration.invalid">
+              Please enter a valid duration (numbers only)
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-raised-button 
+                  color="primary" 
+                  (click)="addHobby()"
+                  [disabled]="!newHobby.value || !newHobbyDuration.valid">
+            Add Hobby
+          </button>
+        </div>
+
+        <div *ngIf="hobbiesList().length > 0" class="hobbies-list">
+          <mat-chip-grid #chipGrid>
+            <mat-chip-row *ngFor="let hobby of hobbiesList(); let i = index" 
+                         [removable]="true" 
+                         (removed)="removeHobby(i)">
+              {{ hobby.name }} ({{ hobby.duration }} months)
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          </mat-chip-grid>
+        </div>
+        
+        <mat-error *ngIf="hasError('hobbies')">
+          {{ getErrorMessage('hobbies') }}
+        </mat-error>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" type="submit" data-cy="submit" [disabled]="!isFormValid()">
+        <mat-icon>send</mat-icon> Submit
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
