@@ -140,6 +140,15 @@ src/
 7. **Hobbies** (at least one required, with name and duration)
 
 ## Known Issues
+
+- Email availability check is currently simulated in the frontend.
+- Date format is fixed to DD-MM-YYYY for the API submission.
+
+
+- Email availability check is currently simulated in the frontend.
+- Date format is fixed to DD-MM-YYYY for the API submission.
+
+
 ## Show result
 
 ![result](Screenshot_41.png)
@@ -147,13 +156,6 @@ src/
 ## Show result in Browser
 
 ![front result](front.png)
-
-- Email availability check is currently simulated in the frontend.
-- Date format is fixed to DD-MM-YYYY for the API submission.
-
-
-- Email availability check is currently simulated in the frontend.
-- Date format is fixed to DD-MM-YYYY for the API submission.
 
 
 ## License
