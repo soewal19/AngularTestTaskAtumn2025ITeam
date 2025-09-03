@@ -140,6 +140,9 @@ src/
 7. **Hobbies** (at least one required, with name and duration)
 
 ## Known Issues
+## Show result
+
+![result](Screenshot_41.png)
 
 - Email availability check is currently simulated in the frontend.
 - Date format is fixed to DD-MM-YYYY for the API submission.
