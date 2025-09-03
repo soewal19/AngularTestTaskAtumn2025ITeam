@@ -2,9 +2,9 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:4200',
-    supportFile: 'cypress/support/e2e.ts',
-    specPattern: 'src/**/*.e2e-spec.ts',
+    baseUrl: 'http://127.0.0.1:4200',
+    supportFile: false,
+    specPattern: 'src/**/*.cy.ts',
     video: false,
     screenshotOnRunFailure: true,
     // Отключаем изоляцию тестов, чтобы не перезагружать страницу между тестами
@@ -13,19 +13,7 @@ export default defineConfig({
       // Можно добавить обработчики событий Node.js здесь
     },
     // Включаем поддержку TypeScript
-    experimentalWebKitSupport: true,
-    // Настройки для работы с Angular
-    component: {
-      devServer: {
-        framework: 'angular',
-        bundler: 'webpack',
-      },
-      specPattern: '**/*.cy.ts'
-    }
+    experimentalWebKitSupport: true
   },
-  // Настройки для TypeScript
-  typescript: {
-    // Указываем путь к tsconfig.json для тестов
-    tsconfig: './cypress/tsconfig.json'
-  }
+  
 });

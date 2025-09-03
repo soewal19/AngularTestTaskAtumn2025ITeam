@@ -9,6 +9,41 @@
     &:hover {
       @apply shadow-xl;
     }
+
+  /* Smooth fade-in for form container */
+  .fade-in {
+    animation: fadeInSoft 300ms ease-out;
+  }
+
+  @keyframes fadeInSoft {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Skeleton styles */
+  .skeleton-card { position: relative; overflow: hidden; }
+  .skeleton-row { display: flex; gap: 16px; margin-bottom: 16px; }
+  .skeleton {
+    position: relative;
+    border-radius: 6px;
+    background: #e5e7eb; /* gray-200 */
+    overflow: hidden;
+  }
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    animation: shimmer 1200ms infinite;
+  }
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+  .skeleton-title { height: 28px; width: 60%; }
+  .skeleton-input { height: 56px; flex: 1; }
+  .skeleton-btn { height: 40px; width: 140px; }
+  .skeleton-btn-lg { height: 36px; width: 180px; margin-left: auto; }
   }
   
   .mat-card-header {
@@ -24,6 +59,32 @@
 
     .form-field {
       @apply flex-1 min-w-[250px];
+      
+      // Explicit invalid state when we set [class.invalid]
+      &.invalid {
+        // Outline for MDC-based mat-form-field (outlined appearance)
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: #dc2626 !important; // red-600
+          border-width: 2px !important;
+        }
+        // Floating label color
+        .mat-mdc-floating-label {
+          color: #dc2626 !important;
+        }
+        // Input and icon colors (prefix/suffix)
+        .mat-mdc-form-field-icon-prefix,
+        .mat-mdc-form-field-icon-suffix {
+          color: #dc2626 !important;
+        }
+        // Error message color
+        .mat-mdc-form-field-error {
+          color: #dc2626 !important;
+          font-size: 0.75rem;
+          margin-top: 0.5rem;
+        }
+      }
       
       .mat-form-field-wrapper {
         @apply pb-0;
@@ -60,9 +121,31 @@
   .hobbies-section {
     @apply my-6 p-4 md:p-6 border border-gray-200 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-700/50;
     transition: all 0.2s ease-in-out;
+    position: relative;
     
     &:hover {
       @apply border-gray-300 dark:border-gray-600;
+    }
+
+    &.invalid {
+      border-color: #dc2626 !important; // red-600
+      border-width: 2px;
+      background-color: rgba(220, 38, 38, 0.03);
+      
+      h3 { 
+        color: #dc2626 !important; 
+      }
+      
+      .hobbies-error {
+        color: #dc2626;
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+        display: block;
+      }
+    }
+    
+    .hobbies-error {
+      display: none;
     }
 
     h3 {
@@ -108,17 +191,66 @@
     .hobbies-list {
       @apply mt-4;
 
-      .mat-chip {
-        @apply m-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 border border-blue-200 dark:border-blue-800;
+      .hobby-chips {
+        @apply flex flex-wrap gap-3;
+        margin-bottom: 16px;
+      }
+
+      .hobby-chip {
+        @apply inline-flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium;
+        @apply bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100;
+        @apply border border-blue-200 dark:border-blue-800;
         transition: all 0.2s ease;
+        margin: 4px;
+        min-height: 32px;
         
         &:hover {
           @apply bg-blue-200 dark:bg-blue-800;
           transform: translateY(-1px);
         }
         
-        .mat-chip-remove {
-          @apply text-blue-500 dark:text-blue-300 opacity-70 hover:opacity-100;
+        &.invalid-hobby {
+          @apply bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100;
+          @apply border border-red-200 dark:border-red-800;
+          
+          &:hover {
+            @apply bg-red-200 dark:bg-red-800;
+          }
+        }
+        
+        .hobby-text {
+          @apply flex-1;
+        }
+        
+        .remove-button {
+          @apply text-blue-500 dark:text-blue-300 cursor-pointer;
+          font-size: 18px;
+          font-weight: bold;
+          padding: 2px 6px;
+          border: none;
+          background: none;
+          border-radius: 50%;
+          transition: all 0.2s ease;
+          opacity: 0.7;
+          min-width: 24px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          &:hover {
+            @apply bg-blue-200 dark:bg-blue-700;
+            opacity: 1;
+            transform: scale(1.1);
+          }
+        }
+        
+        &.invalid-hobby .remove-button {
+          @apply text-red-500 dark:text-red-300;
+          
+          &:hover {
+            @apply bg-red-200 dark:bg-red-700;
+          }
         }
       }
     }
@@ -248,5 +380,54 @@
         @apply text-white;
       }
     }
+  }
+
+  // Стили для списка агрегированных ошибок под кнопкой
+  .form-errors {
+    @apply mt-3;
+    ul { @apply list-disc pl-5 m-0; }
+    li {
+      @apply text-red-600 dark:text-red-400 text-sm leading-6;
+      color: #dc2626 !important; // enforce red for errors
+      animation: fadeIn 0.2s ease-in-out;
+    }
+  }
+
+  // Snackbar color schemes
+  .mat-mdc-snack-bar-container.success-snackbar {
+    --mdc-snackbar-container-color: #16a34a; // green-600
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+  .mat-mdc-snack-bar-container.error-snackbar {
+    --mdc-snackbar-container-color: #dc2626; // red-600
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+
+  // Confetti effect styles
+  .confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 9999;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    top: -10vh;
+    border-radius: 2px;
+    opacity: 0.9;
+    animation: confetti-fall 1.6s linear forwards, confetti-spin 1.6s ease-in-out infinite;
+  }
+
+  @keyframes confetti-fall {
+    0% { transform: translateY(-120%) rotate(0deg); }
+    100% { transform: translateY(120vh) rotate(720deg); }
+  }
+
+  @keyframes confetti-spin {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+    100% { filter: brightness(1); }
   }
 }

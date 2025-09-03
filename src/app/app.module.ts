@@ -5,13 +5,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatChipSet, MatChip } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { EngineerFormComponent } from './engineer-form/engineer-form.component';
@@ -19,8 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -31,15 +31,18 @@ import { AppRoutingModule } from './app-routing.module';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatChipsModule,
+    MatChipSet,
+    MatChip,
     MatIconModule,
     MatButtonModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    AppRoutingModule,
-    EngineerFormComponent
+    MatSnackBarModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

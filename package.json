@@ -11,12 +11,13 @@
     "e2e": "npx playwright test --ui",
     "e2e:headless": "npx playwright test",
     "e2e:report": "npx playwright show-report",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "playwright:install": "npx playwright install --with-deps"
   },
   "private": true,
   "dependencies": {
-    "20": "^3.1.9",
     "@angular/animations": "^17.3.0",
     "@angular/cdk": "^17.3.0",
     "@angular/common": "^17.3.0",
@@ -27,7 +28,6 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
-    "node": "^22.19.0",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
     "zone.js": "~0.14.4"
@@ -50,6 +50,7 @@
     "tailwindcss": "^3.4.1",
     "ts-loader": "^9.5.1",
     "typescript": "~5.3.3",
-    "webpack": "^5.89.0"
+    "webpack": "^5.89.0",
+    "cypress": "^13.7.0"
   }
 }
