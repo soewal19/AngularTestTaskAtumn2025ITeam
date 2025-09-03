@@ -144,8 +144,17 @@ src/
 
 ![result](Screenshot_41.png)
 
+## Show result in Browser
+
+![front result](front.png)
+
 - Email availability check is currently simulated in the frontend.
 - Date format is fixed to DD-MM-YYYY for the API submission.
+
+
+- Email availability check is currently simulated in the frontend.
+- Date format is fixed to DD-MM-YYYY for the API submission.
+
 
 ## License
 
