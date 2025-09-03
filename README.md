@@ -21,7 +21,7 @@ This is a responsive form built with Angular and Angular Material that collects 
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone github.com:soewal19/AngularTestTaskAtumn2025ITeam.git
    cd frontend-engineer-form
    ```
 
